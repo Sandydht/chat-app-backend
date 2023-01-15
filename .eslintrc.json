@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "ignorePatterns": [
+        "public/*"
+    ],
+    "overrides": [
+    ],
+    "rules": {
+        "indent": ["error", 4],
+        "semi": ["error", "always"],
+        "comma-dangle": ["error", "never"],
+        "eol-last": ["error", "always"],
+        "no-console": 1,
+        "no-underscore-dangle": 0,
+        "no-useless-escape": 0,
+        "no-undef": 0
+    }
+}

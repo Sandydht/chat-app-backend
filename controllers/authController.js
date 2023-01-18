@@ -65,7 +65,6 @@ app.post('/login', async (req, res) => {
             if (err) throw 'Error signing token';
             const result = userTransform.showUser(user);
             res.json({ status: 'success', token: `Bearer ${token}`, result });
-
         });
     } catch (error) {
         errorHandler.badRequest(res, error);

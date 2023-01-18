@@ -22,4 +22,9 @@ helper.comparePasswordAsync = (param1, param2) => {
     });
 };
 
+helper.passportHandler = {
+    session: false,
+    failureRedirect: '/response/fail'
+};
+
 module.exports = helper;

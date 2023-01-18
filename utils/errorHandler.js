@@ -5,7 +5,7 @@ errorHandler.badRequest = (res, err) => {
     return res.status(400).json({ status: 'error', message: err });
 };
 errorHandler.unauthorized = (res, err) => {
-    return res.status(401).json({ status: 'error', message: err });
+    return res.status(401).json({ status: 'error', message: err || 'Unauthorized' });
 };
 errorHandler.forbidden = (res, err) => {
     return res.status(403).json({ status: 'error', message: err });

@@ -20,7 +20,10 @@ if (NODE_ENV === 'development') {
 }
 
 mongoose.set('strictQuery', false);
-mongoose.connect(connection);
+mongoose.connect(connection, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

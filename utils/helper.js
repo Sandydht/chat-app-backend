@@ -27,4 +27,10 @@ helper.passportHandler = {
     failureRedirect: '/response/fail'
 };
 
+helper.replaceSqlInjection = (data) => {
+    data = data || "";
+    const pattern = /([^a-z0-9 ']+)/gi;
+    return data.replace(pattern, '');
+};
+
 module.exports = helper;

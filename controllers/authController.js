@@ -15,14 +15,9 @@ app.post('/register', async (req, res) => {
         const validate = register.validate(req.body);
         if (validate.error) throw validate.error;
 
-        const users = await User.find({ deleted_at: null });
         const phoneNumber = formatter.getPhoneNumber(req.body.phone_number);
-        if (users.length > 0) {
-            const findUser = users.find((data) => (data && data.phone_number) && (data.phone_number === phoneNumber));
-            if (findUser) {
-                return errorHandler.badRequest(res, 'User already exist');
-            }
-        }
+        const user = await User.findOne({ phone_number: phoneNumber, deleted_at: null });
+        if (user) return errorHandler.badRequest(res, 'User already exist');
 
         bcrypt.genSalt(saltRounds, (err, salt) => {
             if (err) throw err;

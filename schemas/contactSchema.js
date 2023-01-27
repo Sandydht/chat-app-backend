@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const contactSchema = new Schema({
     user_contact_id: { type: Schema.ObjectId, ref: 'user' },
     user_id: { type: Schema.ObjectId, ref: 'user' },
+    status: { type: Number, default: 1 }, // 1: pending, 2: approve, 3: reject
 
     deleted_at: { type: Date }
 }, {

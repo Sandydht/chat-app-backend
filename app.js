@@ -13,6 +13,7 @@ const secret = process.env.SECRET;
 const indexRouter = require('~/routes/index');
 
 const app = express();
+app.io = require('socket.io')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

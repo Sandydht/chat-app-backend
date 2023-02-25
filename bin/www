@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 
-const app = require('../app');
+require('module-alias/register');
+require('dotenv').config();
+const app = require('~/app');
 const debug = require('debug')('chat-app-backend:server');
 const http = require('http');
 
@@ -20,11 +22,6 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-
-/**
- * socket.io
- */
-app.io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.

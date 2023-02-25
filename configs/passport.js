@@ -1,5 +1,5 @@
 const { Strategy, ExtractJwt } = require('passport-jwt');
-const User = require('~/models/user');
+const User = require('~/db/mongo/models/user');
 const secret = process.env.SECRET;
 
 module.exports = function(passport) {

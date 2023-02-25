@@ -3,7 +3,7 @@ const helper = require('~/utils/helper');
 const passport = require('passport');
 const errorHandler = require('~/utils/errorHandler');
 const dataMeta = require('~/utils/dataMeta');
-const User = require('~/models/user');
+const User = require('~/db/mongo/models/user');
 
 app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
     try {

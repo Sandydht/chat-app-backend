@@ -3,7 +3,7 @@ const errorHandler = require('~/utils/errorHandler');
 const helper = require('~/utils/helper');
 const passport = require('passport');
 const dataMeta = require('~/utils/dataMeta');
-const Contact = require('~/models/contact');
+const Contact = require('~/db/mongo/models/contact');
 const mongoose = require('mongoose');
 
 app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {

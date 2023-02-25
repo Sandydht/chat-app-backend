@@ -1,7 +1,7 @@
 const { register, login } = require('~/validators/user');
 const app = require('express').Router();
 const errorHandler = require('~/utils/errorHandler');
-const User = require('~/models/user');
+const User = require('~/db/mongo/models/user');
 const formatter = require('~/utils/formatter');
 const helper = require('~/utils/helper');
 const bcrypt = require('bcrypt');

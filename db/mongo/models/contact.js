@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const contactSchema = require('~/schemas/contactSchema');
+const contactSchema = require('~/db/mongo/schemas/contactSchema');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2');
 

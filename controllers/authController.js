@@ -9,6 +9,8 @@ const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const secret = process.env.SECRET;
 const userTransform = require('~/transformers/user');
+const passport = require('passport');
+const helper = require('~/utils/helper');
 
 app.post('/register', async (req, res) => {
     try {
@@ -61,6 +63,17 @@ app.post('/login', async (req, res) => {
             const result = userTransform.showUser(user);
             res.json({ status: 'success', token: `Bearer ${token}`, result });
         });
+    } catch (error) {
+        errorHandler.badRequest(res, error);
+    }
+});
+
+app.post('/logout', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.user._id, deleted_at: null });
+        if (!user) return errorHandler.badRequest(res, 'User not found');
+        req.logout();
+        res.json({ status: 'OK', result: 'success' });
     } catch (error) {
         errorHandler.badRequest(res, error);
     }

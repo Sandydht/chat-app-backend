@@ -10,7 +10,6 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 const userTransform = require('~/transformers/user');
 const passport = require('passport');
-const helper = require('~/utils/helper');
 
 app.post('/register', async (req, res) => {
     try {

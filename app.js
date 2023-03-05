@@ -6,11 +6,15 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const cors = require('cors');
 const secret = process.env.SECRET;
 
 const indexRouter = require('~/routes/index');
 
 const app = express();
+
+// CORS
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

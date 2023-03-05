@@ -67,15 +67,24 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/logout', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
+app.get('/user', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.user._id, deleted_at: null });
         if (!user) return errorHandler.badRequest(res, 'User not found');
-        req.logout();
-        res.json({ status: 'OK', result: 'success' });
+        const result = userTransform.showUser(user);
+        res.json({ status: 'success', result });
     } catch (error) {
         errorHandler.badRequest(res, error);
     }
+});
+
+app.post('/logout', passport.authenticate('jwt', helper.passportHandler), async (req, res, next) => {
+    const user = await User.findOne({ _id: req.user._id, deleted_at: null });
+    if (!user) return errorHandler.badRequest(res, 'User not found');
+    req.logout((err) => {
+        if (err) return next(err);
+        res.json({ status: 'success', result: 'See you' });
+    })
 });
 
 module.exports = app;

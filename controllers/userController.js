@@ -4,6 +4,7 @@ const passport = require('passport');
 const errorHandler = require('~/utils/errorHandler');
 const dataMeta = require('~/utils/dataMeta');
 const User = require('~/db/mongo/models/user');
+const mongoose = require('mongoose');
 
 app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
     try {
@@ -13,7 +14,8 @@ app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), 
         };
 
         const query = [
-            { deleted_at: null }
+            { deleted_at: null },
+            { _id: { $ne: mongoose.Types.ObjectId(req.user._id) } }
         ];
 
         if (meta.name) {

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const contactSchema = new Schema({
-    user_contact_id: { type: Schema.ObjectId, ref: 'user' },
+const userSchema = new Schema({
+    chat_room_id: { type: Schema.ObjectId, ref: 'chat_room' },
     user_id: { type: Schema.ObjectId, ref: 'user' },
-    status: { type: Number, default: 1 }, // 1: pending, 2: approve, 3: reject
+    user_recipient_id: { type: Schema.ObjectId, ref: 'user' },
+    message: { type: String },
 
     deleted_at: { type: Date }
 }, {
@@ -14,4 +15,4 @@ const contactSchema = new Schema({
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
-module.exports = contactSchema;
+module.exports = userSchema;

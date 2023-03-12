@@ -25,7 +25,7 @@ app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), 
         }
 
         const myAggregate = ChatRoom.aggregate([
-            { 
+            {
                 $match: {
                     $and: [
                         { deleted_at: null },
@@ -65,10 +65,10 @@ app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), 
             {
                 $group: {
                     _id: '$_id',
-                    username: '$user.username',
-                    phone_number: '$user.phone_number',
-                    message: '$chat_message.message',
-                    created_at: '$created_at'
+                    username: { $first: '$user.username' },
+                    phone_number: { $first: '$user.phone_number' },
+                    message: { $first: '$chat_message.message' },
+                    created_at: { $first: '$created_at' }
                 }
             }
         ]);
@@ -94,10 +94,14 @@ app.post('/create', passport.authenticate('jwt', helper.passportHandler), async 
         const validate = create.validate(req.body);
         if (validate.error) throw validate.error;
 
-        const chatRoom = new ChatRoom({ ...req.body });
-        await chatRoom.save();
-
-        res.json({ status: 'success', result: 'success' });
+        const chatRoom = await ChatRoom.findOne({ user_id: req.body.user_id, user_recipient_id: req.body.user_recipient_id, deleted_at: null });
+        if (chatRoom) {
+            res.json({ status: 'success', result: chatRoom });
+        } else {
+            const newChatRoom = new ChatRoom({ ...req.body });
+            await newChatRoom.save();
+            res.json({ status: 'success', result: newChatRoom });
+        }
     } catch (error) {
         errorHandler.badRequest(res, error);
     }
@@ -106,7 +110,7 @@ app.post('/create', passport.authenticate('jwt', helper.passportHandler), async 
 app.delete('/delete/:id', passport.authenticate('jwt', helper.passportHandler), async (req, res) => {
     try {
         const chatRoom = await ChatRoom.findOne({ _id: req.params.id, deleted_at: null }).select('_id').lean();
-        if (!chatRoom) return errorHandler.BadRequest(res, 'Chat room is not found');
+        if (!chatRoom) return errorHandler.badRequest(res, 'Chat room is not found');
 
         await Promise.all([
             ChatRoom.updateMany({ _id: chatRoom._id }, { deleted_at: new Date() }),

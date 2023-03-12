@@ -30,6 +30,7 @@ app.get('/list-paginate', passport.authenticate('jwt', helper.passportHandler), 
                     _id: '$_id',
                     username: { $first: '$username' },
                     phone_number: { $first: '$phone_number' },
+                    status: { $first: '$status' },
                     created_at: { $first: '$created_at' }
                 }
             }
